@@ -37,6 +37,7 @@ public class ZombieSpawnSystem extends IteratingSystem {
                 .createHealth()
                 .createDamage()
                 .createSensor()
+                .createMove()
                 .get();
         getEngine().addEntity(zomb);
     }

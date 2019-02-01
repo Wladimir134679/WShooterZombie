@@ -31,7 +31,8 @@ public class ExplosionSpawnZombieBuilder extends ExplosionBuilder{
         light.setSoftnessLength(0.1f);
         lightComponent.light = light;
         Filter filter = new Filter();
-        filter.groupIndex = BodyTypePhysics.ZOMBIE_BODY;
+        filter.categoryBits = BodyTypePhysics.CATEGORY_LIGHT;
+        filter.maskBits = BodyTypePhysics.MASK_LIGHT_EXPLOSION;
         light.setContactFilter(filter);
         exp.add(lightComponent);
         return this;

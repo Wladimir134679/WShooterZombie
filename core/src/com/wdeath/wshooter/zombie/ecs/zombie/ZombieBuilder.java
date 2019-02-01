@@ -20,6 +20,7 @@ public class ZombieBuilder {
     public ZombieBuilder createData(ZombieSpawnComponent spawn){
         this.spawn = spawn;
         ZombieComponent data = new ZombieComponent();
+        data.speed = spawn.speed;
         zomb.add(data);
         return this;
     }
@@ -38,16 +39,17 @@ public class ZombieBuilder {
 
     public ZombieBuilder createSensor(){
         CircleShape shape = new CircleShape();
-        shape.setRadius(4);
+        shape.setRadius(8);
         FixtureDef def = new FixtureDef();
         def.isSensor = true;
         def.shape = shape;
         def.filter.categoryBits = BodyTypePhysics.CATEGORY_SENSOR;
-//        def.filter.maskBits = ;
+        def.filter.maskBits = BodyTypePhysics.MASK_SENSOR_ZOMBIE;
 
         ZombiePhysicsComponent physicsComponent = zomb.getComponent(ZombiePhysicsComponent.class);
         Fixture fix = physicsComponent.body.createFixture(def);
         physicsComponent.sensorPlayer = fix;
+        BodyTypePhysics.add(fix, zomb, BodyTypePhysics.BodyType.SENSOR_ZOMBIE);
         return this;
     }
 
@@ -65,6 +67,12 @@ public class ZombieBuilder {
         return this;
     }
 
+    public ZombieBuilder createMove(){
+        ZombieMoveComponent move = new ZombieMoveComponent();
+        zomb.add(move);
+        return this;
+    }
+
     public Entity get(){
         return zomb;
     }
@@ -77,11 +85,6 @@ public class ZombieBuilder {
         def.fixedRotation = false;
 
         Body body = worldPhysics.world.createBody(def);
-        BodyTypePhysics type = new BodyTypePhysics();
-        type.type = BodyTypePhysics.BodyType.ZOMBIE;
-        type.data = zomb;
-        body.setUserData(type);
-
         return body;
     }
 
@@ -89,16 +92,14 @@ public class ZombieBuilder {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(0.2f, 0.4f);
         FixtureDef def = new FixtureDef();
-        def.filter.groupIndex = BodyTypePhysics.ZOMBIE_BODY;
         def.shape = shape;
-        def.filter.groupIndex = BodyTypePhysics.ZOMBIE_BODY;
+        def.filter.groupIndex = BodyTypePhysics.GROUP_ZOMBIE;
         def.filter.categoryBits = BodyTypePhysics.CATEGORY_ZOMBIE;
         def.filter.maskBits = BodyTypePhysics.MASK_ZOMBIE;
-//        def.density = 2;
 
         Fixture fix = body.createFixture(def);
 
-        return fix;
+        return addType(fix);
     }
 
     private Fixture createFixSign(Body body){
@@ -111,11 +112,23 @@ public class ZombieBuilder {
         pos[id++] = new Vector2(0, - 0.1f);
         shape.set(pos);
         FixtureDef def = new FixtureDef();
-        def.filter.groupIndex = BodyTypePhysics.ZOMBIE_BODY;
+        def.filter.groupIndex = BodyTypePhysics.GROUP_ZOMBIE;
         def.filter.categoryBits = BodyTypePhysics.CATEGORY_ZOMBIE;
         def.filter.maskBits = BodyTypePhysics.MASK_ZOMBIE;
         def.shape = shape;
 
-        return body.createFixture(def);
+        return addType(body.createFixture(def));
+    }
+
+    private Fixture addType(Fixture fix){
+        return addType(fix, BodyTypePhysics.BodyType.ZOMBIE);
+    }
+
+    private Fixture addType(Fixture fix, BodyTypePhysics.BodyType typeB){
+        BodyTypePhysics type = new BodyTypePhysics();
+        type.type = typeB;
+        type.data = zomb;
+        fix.setUserData(type);
+        return fix;
     }
 }

@@ -33,10 +33,10 @@ public class WorldLoader {
 
         physics.wall = physics.world.createBody(defB);
 
-        BodyTypePhysics type1 = new BodyTypePhysics();
-        type1.data = world;
-        type1.type = BodyTypePhysics.BodyType.WORLD_WALL;
-        physics.wall.setUserData(type1);
+//        BodyTypePhysics type1 = new BodyTypePhysics();
+//        type1.data = world;
+//        type1.type = BodyTypePhysics.BodyType.WORLD_WALL;
+//        physics.wall.setUserData(type1);
 
         TiledMapTileLayer walls = (TiledMapTileLayer)map.tiledMap.getLayers().get("wall");
         for(int xi = 0; xi < walls.getWidth(); xi++){
@@ -74,10 +74,10 @@ public class WorldLoader {
         FixtureDef defF = new FixtureDef();
         defF.friction = 0;
         defF.shape = shape;
-        defF.filter.groupIndex = BodyTypePhysics.ALL_OTHER;
         defF.filter.categoryBits = BodyTypePhysics.CATEGORY_WALL;
 
         Fixture fix = physics.wall.createFixture(defF);
+        BodyTypePhysics.add(fix, world, BodyTypePhysics.BodyType.WORLD_WALL);
         return fix;
     }
 
@@ -93,8 +93,8 @@ public class WorldLoader {
         FixtureDef defF = new FixtureDef();
         defF.friction = 0.5f;
         defF.shape = shape;
-        defF.filter.groupIndex = BodyTypePhysics.ALL_OTHER;
         defF.filter.categoryBits = BodyTypePhysics.CATEGORY_WALL;
         Fixture fix = physics.wall.createFixture(defF);
+        BodyTypePhysics.add(fix, world, BodyTypePhysics.BodyType.WORLD_WALL);
     }
 }

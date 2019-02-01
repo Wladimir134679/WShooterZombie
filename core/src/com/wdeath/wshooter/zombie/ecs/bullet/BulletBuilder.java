@@ -68,10 +68,6 @@ public class BulletBuilder {
         def.type = BodyDef.BodyType.DynamicBody;
         def.bullet = true;
         Body body = world.world.createBody(def);
-        BodyTypePhysics type = new BodyTypePhysics();
-        type.data = bullet;
-        type.type = BodyTypePhysics.BodyType.BULLET;
-        body.setUserData(type);
         return body;
     }
 
@@ -82,8 +78,11 @@ public class BulletBuilder {
         FixtureDef def = new FixtureDef();
         def.density = 2;
         def.shape = shape;
+        def.filter.categoryBits = BodyTypePhysics.CATEGORY_BULLET;
+        def.filter.maskBits = BodyTypePhysics.MASK_BULLET;
 
         Fixture fix = physics.body.createFixture(def);
+        BodyTypePhysics.add(fix, bullet, BodyTypePhysics.BodyType.BULLET);
         return fix;
     }
 

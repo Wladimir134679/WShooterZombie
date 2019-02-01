@@ -26,6 +26,7 @@ import com.wdeath.wshooter.zombie.ecs.stage.systs.StageRenderSystem;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerSpawnComponent;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieDamageSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieDeleteSystem;
+import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieMoveSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieSpawnSystem;
 import com.wdeath.wshooter.zombie.utill.LoadingEngine;
 import com.wdeath.wshooter.zombie.ecs.world.WorldBuilder;
@@ -120,6 +121,7 @@ public class LoadingGameScreen implements Screen {
             ZombieDeleteSystem zombieDeleteSystem = new ZombieDeleteSystem(world);
             ZombieDamageSystem zombieDamageSystem = new ZombieDamageSystem(world);
             PlayerControllerSystem playerControllerSystem = new PlayerControllerSystem();
+            ZombieMoveSystem zombieMoveSystem = new ZombieMoveSystem();
             engine.addSystem(playerControllerSystem);
             engine.addSystem(levelUpdateSystem);
             engine.addSystem(zombieSpawnSystem);
@@ -129,6 +131,7 @@ public class LoadingGameScreen implements Screen {
             engine.addSystem(playerShotSystem);
             engine.addSystem(zombieDamageSystem);
             engine.addSystem(zombieDeleteSystem);
+            engine.addSystem(zombieMoveSystem);
             engine.addSystem(bulletDeleteSystem);
             engine.addSystem(explosionLightSystem);
             engine.addSystem(explosionSpawnSystem);

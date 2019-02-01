@@ -7,6 +7,7 @@ public class ZombieSpawnComponent implements Component {
 
     public Vector2 pos;
     public float angle;
+    public float speed;
 
     public float maxHealth;
 

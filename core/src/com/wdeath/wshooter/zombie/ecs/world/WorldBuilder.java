@@ -94,7 +94,7 @@ public class WorldBuilder {
         Iterator<MapObject> iter = objs.iterator();
         Filter filter = new Filter();
         filter.categoryBits = BodyTypePhysics.CATEGORY_LIGHT;
-        filter.maskBits = BodyTypePhysics.MASK_LIGHT;
+        filter.maskBits = BodyTypePhysics.MASK_LIGHT_WORLD;
 //        filter.groupIndex = BodyTypePhysics.
         while(iter.hasNext()){
             MapObject obj = iter.next();

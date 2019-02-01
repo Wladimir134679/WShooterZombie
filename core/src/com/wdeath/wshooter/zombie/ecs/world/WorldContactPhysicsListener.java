@@ -8,19 +8,25 @@ import com.wdeath.wshooter.zombie.damage.DamageType;
 import com.wdeath.wshooter.zombie.ecs.bullet.coms.BulletDataComponent;
 import com.wdeath.wshooter.zombie.ecs.bullet.coms.BulletDeleteComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerDamageComponent;
+import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerPhysicsComponent;
 import com.wdeath.wshooter.zombie.ecs.zombie.coms.ZombieDamageComponent;
+import com.wdeath.wshooter.zombie.ecs.zombie.coms.ZombieMoveComponent;
 
 public class WorldContactPhysicsListener implements ContactListener {
 
 
     @Override
     public void beginContact(Contact contact) {
+        bulletAndWorldWall(contact);
+        bulletToZombie(contact);
+        playerAndZombie(contact);
 
+        playerAndSensorZombieBegin(contact);
     }
 
     @Override
     public void endContact(Contact contact) {
-
+        playerAndSensorZombieEnd(contact);
     }
 
     @Override
@@ -30,28 +36,53 @@ public class WorldContactPhysicsListener implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        Pack pack = getA(BodyTypePhysics.BodyType.BULLET, BodyTypePhysics.BodyType.WORLD_WALL, contact);
-        if(pack != null){
-            Entity bulletEnt = ((Entity)((BodyTypePhysics)pack.a.getBody().getUserData()).data);
-            bulletEnt.add(new BulletDeleteComponent());
-        }
-        bulletToZombie(contact);
-        playerAndZombie(contact);
     }
+
+    private void bulletAndWorldWall(Contact contact){
+        Pack pack = getA(BodyTypePhysics.BodyType.BULLET, BodyTypePhysics.BodyType.WORLD_WALL, contact);
+        if(pack == null)
+            return;
+        Entity bulletEnt = ((Entity)((BodyTypePhysics)pack.a.getUserData()).data);
+        bulletEnt.add(new BulletDeleteComponent());
+    }
+
+    private void playerAndSensorZombieBegin(Contact contact){
+        Pack pack = getA(BodyTypePhysics.BodyType.SENSOR_ZOMBIE, BodyTypePhysics.BodyType.PLAYER, contact);
+        if (pack == null) {
+            return;
+        }
+        Entity zombie = ((Entity)((BodyTypePhysics)pack.a.getUserData()).data);
+        Entity player = ((Entity)((BodyTypePhysics)pack.b.getUserData()).data);
+
+        PlayerPhysicsComponent phP = player.getComponent(PlayerPhysicsComponent.class);
+
+        ZombieMoveComponent moveZ = zombie.getComponent(ZombieMoveComponent.class);
+        moveZ.purse = phP.body;
+    }
+
+    private void playerAndSensorZombieEnd(Contact contact){
+        Pack pack = getA(BodyTypePhysics.BodyType.SENSOR_ZOMBIE, BodyTypePhysics.BodyType.PLAYER, contact);
+        if (pack == null) {
+            return;
+        }
+        Entity zombie = ((Entity)((BodyTypePhysics)pack.a.getUserData()).data);
+        ZombieMoveComponent moveZ = zombie.getComponent(ZombieMoveComponent.class);
+        moveZ.purse = null;
+    }
+
     private void playerAndZombie(Contact contact) {
         Pack pack = getA(BodyTypePhysics.BodyType.ZOMBIE, BodyTypePhysics.BodyType.PLAYER, contact);
         if (pack == null) {
             return;
         }
-        Entity player = ((Entity)((BodyTypePhysics)pack.b.getBody().getUserData()).data);
-        Entity zombie = ((Entity)((BodyTypePhysics)pack.a.getBody().getUserData()).data);
+        Entity player = ((Entity)((BodyTypePhysics)pack.b.getUserData()).data);
+        Entity zombie = ((Entity)((BodyTypePhysics)pack.a.getUserData()).data);
         float angle = 0;
         Vector2 posP = pack.b.getBody().getPosition();
         Vector2 posZ = pack.a.getBody().getPosition();
-        angle = (float)Math.atan2(posP.y - posZ.y, posP.x - posZ.x);
+        angle = (float)Math.atan2(posZ.y - posP.y, posZ.x - posP.x);
         float s = 10;
-        Vector2 vec = new Vector2(s,s).rotate((float)Math.toDegrees(angle - 180));
-        System.out.println(vec);
+        Vector2 vec = new Vector2(s,s).rotate((float)Math.toDegrees(angle));
         pack.a.getBody().setLinearVelocity(vec);
         PlayerDamageComponent damageComponent = player.getComponent(PlayerDamageComponent.class);
         Damage damage = new Damage();
@@ -65,11 +96,11 @@ public class WorldContactPhysicsListener implements ContactListener {
         if(pack == null) {
             return;
         }
-        Entity bulletEnt = ((Entity)((BodyTypePhysics)pack.a.getBody().getUserData()).data);
+        Entity bulletEnt = ((Entity)((BodyTypePhysics)pack.a.getUserData()).data);
         BulletDataComponent data = bulletEnt.getComponent(BulletDataComponent.class);
         bulletEnt.add(new BulletDeleteComponent());
 
-        Entity zombie = ((Entity)((BodyTypePhysics)pack.b.getBody().getUserData()).data);
+        Entity zombie = ((Entity)((BodyTypePhysics)pack.b.getUserData()).data);
         ZombieDamageComponent damageComponent = zombie.getComponent(ZombieDamageComponent.class);
         Damage damage = new Damage();
         damage.damage = data.damage;
@@ -79,8 +110,8 @@ public class WorldContactPhysicsListener implements ContactListener {
     }
 
     private Pack getA(BodyTypePhysics.BodyType typeA, BodyTypePhysics.BodyType typeB, Contact contact){
-        Object objA = contact.getFixtureA().getBody().getUserData();
-        Object objB = contact.getFixtureB().getBody().getUserData();
+        Object objA = contact.getFixtureA().getUserData();
+        Object objB = contact.getFixtureB().getUserData();
         boolean aNotNull = (objA instanceof BodyTypePhysics);
         boolean bNotNull = (objB instanceof BodyTypePhysics);
         if(!aNotNull || !bNotNull)

@@ -64,12 +64,6 @@ public class PlayerBuilder {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(spawn.spawnPoint.x, spawn.spawnPoint.y);
         Body body = worldPhysics.world.createBody(def);
-
-        BodyTypePhysics type = new BodyTypePhysics();
-        type.type = BodyTypePhysics.BodyType.PLAYER;
-        type.data = entity;
-        body.setUserData(type);
-
         return body;
     }
 
@@ -79,11 +73,11 @@ public class PlayerBuilder {
         FixtureDef def = new FixtureDef();
         def.friction = 1f;
         def.shape = shape;
-        def.filter.groupIndex = BodyTypePhysics.PLAYER_COM_GROUP;
         def.filter.categoryBits = BodyTypePhysics.CATEGORY_PLAYER;
         def.filter.maskBits = BodyTypePhysics.MASK_PLAYER;
 
         Fixture fix = physics.body.createFixture(def);
+        BodyTypePhysics.add(fix, entity, BodyTypePhysics.BodyType.PLAYER);
         return fix;
     }
 
@@ -91,7 +85,8 @@ public class PlayerBuilder {
         PlayerLightComponent light = new PlayerLightComponent();
 
         Filter filter = new Filter();
-        filter.groupIndex = BodyTypePhysics.PLAYER_COM_GROUP;
+        filter.categoryBits = BodyTypePhysics.CATEGORY_PLAYER;
+        filter.maskBits = BodyTypePhysics.MASK_LIGHT_PLAYER;
 
         float angle = 40;
         ConeLight lantern = new ConeLight(lightComponent.rayHandler, 50, Color.BLACK, 0, 0, 0, -angle/2, angle/2);
@@ -136,11 +131,11 @@ public class PlayerBuilder {
         shape.set(posArr);
         FixtureDef def = new FixtureDef();
         def.shape = shape;
-        def.filter.groupIndex = BodyTypePhysics.PLAYER_COM_GROUP;
         def.filter.categoryBits = BodyTypePhysics.CATEGORY_PLAYER;
         def.filter.maskBits = BodyTypePhysics.MASK_PLAYER;
         PlayerPhysicsComponent physicsComponent = entity.getComponent(PlayerPhysicsComponent.class);
         Fixture fix = physicsComponent.body.createFixture(def);
+        BodyTypePhysics.add(fix, entity, BodyTypePhysics.BodyType.PLAYER);
         physicsComponent.weapon = fix;
     }
 
