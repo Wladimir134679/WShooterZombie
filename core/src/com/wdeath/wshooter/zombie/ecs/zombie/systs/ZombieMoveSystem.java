@@ -36,7 +36,7 @@ public class ZombieMoveSystem extends IteratingSystem {
         float angle = (float)Math.atan2(posP.y - posZ.y, posP.x - posZ.x);
 
         ph.body.setTransform(ph.body.getPosition(), angle);
-        Vector2 speed = new Vector2(zc.speed, zc.speed).rotate((float)Math.toDegrees(angle));
+        Vector2 speed = new Vector2(zc.speed, 0).rotateRad(angle);
         ph.body.setLinearVelocity(speed);
     }
 }
