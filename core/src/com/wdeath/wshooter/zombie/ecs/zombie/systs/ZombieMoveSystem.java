@@ -44,7 +44,7 @@ public class ZombieMoveSystem extends IteratingSystem {
         Vector2 posZ = ph.body.getPosition();
         Vector2 pos = new Vector2();
         pos.set(posP.cpy().sub(posZ));
-        float maxs = 5;
+        float maxs = zc.speed * 3;
         double dang = clamp(180 + pos.angle() - angle) - 180;
         dang /= 10;
         angle += Math.max(Math.min(dang, maxs), -maxs);
