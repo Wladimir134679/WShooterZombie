@@ -50,7 +50,7 @@ public class LevelUpdateSystem extends IteratingSystem {
 
     private void spawn(Vector2 pos){
         ZombieSpawnComponent spawn = new ZombieSpawnComponent();
-        spawn.angle = MathUtils.random(0f, 360f);
+        spawn.angle = MathUtils.random(0f, MathUtils.PI2);
         spawn.pos = pos;
         spawn.speed = 2;
         spawn.maxHealth = 10;
