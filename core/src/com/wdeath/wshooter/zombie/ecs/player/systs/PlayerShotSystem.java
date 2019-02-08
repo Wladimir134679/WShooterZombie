@@ -3,6 +3,7 @@ package com.wdeath.wshooter.zombie.ecs.player.systs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.wdeath.wshooter.zombie.damage.DamageType;
 import com.wdeath.wshooter.zombie.ecs.bullet.BulletBuilder;
@@ -44,7 +45,7 @@ public class PlayerShotSystem extends IteratingSystem {
             }
             return;
         }
-        if(move.key[PlayerMoveComponent.SPACE]){
+        if(move.shot){
             if(weapon.shotNum <= 0){
                 weapon.isRecharge = true;
                 return;

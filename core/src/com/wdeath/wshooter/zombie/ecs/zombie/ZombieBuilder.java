@@ -31,7 +31,7 @@ public class ZombieBuilder {
         physics.fixtureBody = createFixBody(physics.body);
         physics.sign = createFixSign(physics.body);
         physics.body.setTransform(physics.body.getPosition(), spawn.angle);
-        physics.body.setLinearDamping(6);
+        physics.body.setLinearDamping(15);
 
         zomb.add(physics);
         return this;

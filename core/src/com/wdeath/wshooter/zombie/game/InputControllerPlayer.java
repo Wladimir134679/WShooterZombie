@@ -38,15 +38,16 @@ public class InputControllerPlayer implements InputProcessor {
         if(player == null)
             return false;
         PlayerMoveComponent move = player.getComponent(PlayerMoveComponent.class);
-        switch (keycode){
-            case Input.Keys.A: move.key[PlayerMoveComponent.LEFT] = true; break;
-            case Input.Keys.W: move.key[PlayerMoveComponent.UP] = true; break;
-            case Input.Keys.S: move.key[PlayerMoveComponent.DOWN] = true; break;
-            case Input.Keys.D: move.key[PlayerMoveComponent.RIGHT] = true; break;
-            case Input.Keys.SPACE: move.key[PlayerMoveComponent.SPACE] = true; break;
-            case Input.Keys.CONTROL_LEFT: move.key[PlayerMoveComponent.CTRL] = true; break;
-            case Input.Keys.SHIFT_LEFT: move.key[PlayerMoveComponent.SHIFT] = true; break;
-        }
+        move.keys.put(keycode, true);
+//        switch (keycode){
+//            case Input.Keys.A: move.key[PlayerMoveComponent.LEFT] = true; break;
+//            case Input.Keys.W: move.key[PlayerMoveComponent.UP] = true; break;
+//            case Input.Keys.S: move.key[PlayerMoveComponent.DOWN] = true; break;
+//            case Input.Keys.D: move.key[PlayerMoveComponent.RIGHT] = true; break;
+//            case Input.Keys.SPACE: move.key[PlayerMoveComponent.SPACE] = true; break;
+//            case Input.Keys.CONTROL_LEFT: move.key[PlayerMoveComponent.CTRL] = true; break;
+//            case Input.Keys.SHIFT_LEFT: move.key[PlayerMoveComponent.SHIFT] = true; break;
+//        }
         return false;
     }
 
@@ -55,15 +56,16 @@ public class InputControllerPlayer implements InputProcessor {
         if(player == null)
             return false;
         PlayerMoveComponent move = player.getComponent(PlayerMoveComponent.class);
-        switch (keycode){
-            case Input.Keys.A: move.key[PlayerMoveComponent.LEFT] = false; break;
-            case Input.Keys.W: move.key[PlayerMoveComponent.UP] = false; break;
-            case Input.Keys.S: move.key[PlayerMoveComponent.DOWN] = false; break;
-            case Input.Keys.D: move.key[PlayerMoveComponent.RIGHT] = false; break;
-            case Input.Keys.SPACE: move.key[PlayerMoveComponent.SPACE] = false; break;
-            case Input.Keys.CONTROL_LEFT: move.key[PlayerMoveComponent.CTRL] = false; break;
-            case Input.Keys.SHIFT_LEFT: move.key[PlayerMoveComponent.SHIFT] = false; break;
-        }
+        move.keys.put(keycode, false);
+//        switch (keycode){
+//            case Input.Keys.A: move.key[PlayerMoveComponent.LEFT] = false; break;
+//            case Input.Keys.W: move.key[PlayerMoveComponent.UP] = false; break;
+//            case Input.Keys.S: move.key[PlayerMoveComponent.DOWN] = false; break;
+//            case Input.Keys.D: move.key[PlayerMoveComponent.RIGHT] = false; break;
+//            case Input.Keys.SPACE: move.key[PlayerMoveComponent.SPACE] = false; break;
+//            case Input.Keys.CONTROL_LEFT: move.key[PlayerMoveComponent.CTRL] = false; break;
+//            case Input.Keys.SHIFT_LEFT: move.key[PlayerMoveComponent.SHIFT] = false; break;
+//        }
         return false;
     }
 
@@ -74,11 +76,20 @@ public class InputControllerPlayer implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT){
+            PlayerMoveComponent move = player.getComponent(PlayerMoveComponent.class);
+            move.shot = true;
+        }
+
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT){
+            PlayerMoveComponent move = player.getComponent(PlayerMoveComponent.class);
+            move.shot = false;
+        }
         return false;
     }
 

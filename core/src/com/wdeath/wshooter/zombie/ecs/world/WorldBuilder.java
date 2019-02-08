@@ -12,8 +12,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.*;
 import com.wdeath.wshooter.zombie.ecs.world.component.*;
 
 import java.util.ArrayList;
@@ -110,6 +109,8 @@ public class WorldBuilder {
             light.setPosition(point);
             light.setSoftnessLength(0.1f);
             light.setContactFilter(filter);
+            lightComponent.lights.add(light);
+
             createLightBody(point);
         }
 
@@ -121,7 +122,12 @@ public class WorldBuilder {
         CircleShape shape = new CircleShape();
         shape.setPosition(pos);
         shape.setRadius(0.05f);
-        physicsComponent.wall.createFixture(shape, 0);
+
+        FixtureDef defF = new FixtureDef();
+        defF.shape = shape;
+        defF.filter.categoryBits = BodyTypePhysics.CATEGORY_WALL;
+
+        Fixture fix = physicsComponent.wall.createFixture(defF);
     }
 
     public Entity get(){

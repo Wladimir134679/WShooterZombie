@@ -47,9 +47,9 @@ public class WorldCameraSystem extends EntitySystem {
         PlayerPhysicsComponent physicsComponent = player.getComponent(PlayerPhysicsComponent.class);
 
         Vector2 posPlayer = physicsComponent.body.getPosition();
-        float angle = physicsComponent.body.getAngle();
-        posPlayer.x += 5 * Math.cos(angle);
-        posPlayer.y += 5 * Math.sin(angle);
+//        float angle = physicsComponent.body.getAngle();
+//        posPlayer.x += 5 * Math.cos(angle);
+//        posPlayer.y += 5 * Math.sin(angle);
 
         camera.position.set(posPlayer, 0);
 
