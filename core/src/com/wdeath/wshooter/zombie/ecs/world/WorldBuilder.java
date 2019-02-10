@@ -128,6 +128,7 @@ public class WorldBuilder {
         defF.filter.categoryBits = BodyTypePhysics.CATEGORY_WALL;
 
         Fixture fix = physicsComponent.wall.createFixture(defF);
+        BodyTypePhysics.add(fix, null, BodyTypePhysics.BodyType.WORLD_WALL);
     }
 
     public Entity get(){

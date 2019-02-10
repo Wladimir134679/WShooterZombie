@@ -29,7 +29,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameData data = new GameData();
-                data.name = "Level 1";
+                data.name = "Level 2";
                 data.fileLevel = "levels/level2.tmx";
                 LoadingGameScreen loader = new LoadingGameScreen(data);
                 MainGameClass.GAME.setScreen(loader);
