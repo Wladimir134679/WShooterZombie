@@ -57,8 +57,6 @@ public class LoadingGameScreen implements Screen {
             engine = new Engine();
         }).add(() -> {
             gameScreen = new GameScreen(engine, levelData);
-            levelData.timeBegin = 2;
-            levelData.sleep = 10;
         }).add(() -> {
             WorldBuilder builder = new WorldBuilder();
             Entity world = builder

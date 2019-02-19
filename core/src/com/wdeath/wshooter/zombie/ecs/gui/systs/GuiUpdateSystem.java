@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
 import com.wdeath.wshooter.zombie.ecs.level.coms.LevelComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerHealthComponent;
-import com.wdeath.wshooter.zombie.game.DataStatic;
 import com.wdeath.wshooter.zombie.ecs.gui.coms.GuiElementComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerWeaponComponent;
@@ -68,7 +67,7 @@ public class GuiUpdateSystem extends EntitySystem {
         LevelComponent levelComponent = level.getComponent(LevelComponent.class);
         String text = "";
         if(levelComponent.isRun){
-            text = "Новая волна через: " + String.valueOf((int)Math.round(levelComponent.data.sleep - levelComponent.timeSpawn)) + "s";
+            text = "Новая волна через: " + String.valueOf((int)Math.round(levelComponent.data.timeWave - levelComponent.timeSpawn)) + "s";
         }else{
             text = "Начало через... " + String.valueOf((int)Math.round(levelComponent.data.timeBegin - levelComponent.timeBegin)) + "s";
         }

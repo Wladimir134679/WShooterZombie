@@ -22,6 +22,8 @@ public class LevelData {
             level.id = obj.getInt("id");
             level.name = obj.getString("name");
             level.file = obj.getString("file");
+            level.timeBegin = obj.getFloat("timeBegin");
+            level.timeWave = obj.getFloat("timeWave");
             levels.add(level);
         }
     }
@@ -31,6 +33,6 @@ public class LevelData {
     public String file;
 
 
-    public float sleep;
+    public float timeWave;
     public float timeBegin;
 }

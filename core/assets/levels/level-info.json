@@ -2,11 +2,15 @@
   {
     "id": 1,
     "name": "Level 1",
-    "file": "levels/level1.tmx"
+    "file": "levels/level1.tmx",
+    "timeBegin": 2.5,
+    "timeWave" : 5
   },
   {
     "id": 2,
     "name": "Level 2",
-    "file": "levels/level2.tmx"
+    "file": "levels/level2.tmx",
+    "timeBegin": 4,
+    "timeWave" : 15
   }
 ]

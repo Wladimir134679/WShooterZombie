@@ -33,7 +33,7 @@ public class LevelUpdateSystem extends IteratingSystem {
             return;
         }
         level.timeSpawn += deltaTime;
-        if(level.timeSpawn >= level.data.sleep){
+        if(level.timeSpawn >= level.data.timeWave){
             level.timeSpawn = 0;
             createWave(level);
         }
