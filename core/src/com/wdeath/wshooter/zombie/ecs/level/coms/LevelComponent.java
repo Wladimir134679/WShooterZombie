@@ -1,7 +1,7 @@
 package com.wdeath.wshooter.zombie.ecs.level.coms;
 
 import com.badlogic.ashley.core.Component;
-import com.wdeath.wshooter.zombie.ecs.level.LevelData;
+import com.wdeath.wshooter.zombie.game.levels.LevelData;
 
 public class LevelComponent implements Component {
 

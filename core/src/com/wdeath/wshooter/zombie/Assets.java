@@ -7,7 +7,10 @@ public class Assets {
 
     public static Skin skinUI;
 
-    public static void load(){
+    public static void loadSkin(){
         skinUI = new Skin(Gdx.files.internal("uiskin.jsonUI"));
+    }
+
+    public static void load(){
     }
 }

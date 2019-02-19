@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.wdeath.wshooter.zombie.game.GameScreen;
+import com.wdeath.wshooter.zombie.game.levels.LevelData;
 import com.wdeath.wshooter.zombie.menu.MenuScreen;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
 
@@ -17,9 +19,8 @@ public class MainGameClass extends Game {
 	public void create() {
 //		System.out.println(Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight()); // 640x480 in Window
 		GAME = this;
-		Assets.load();
-		WeaponData.init();
-		this.setScreen(new MenuScreen());
+		Assets.loadSkin();
+		this.setScreen(new GameLoader());
 	}
 
 	@Override

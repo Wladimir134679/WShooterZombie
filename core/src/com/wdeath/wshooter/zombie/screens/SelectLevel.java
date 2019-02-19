@@ -1,4 +1,4 @@
-package com.wdeath.wshooter.zombie.menu;
+package com.wdeath.wshooter.zombie.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,36 +11,54 @@ import com.wdeath.wshooter.zombie.MainGameClass;
 import com.wdeath.wshooter.zombie.game.LoadingGameScreen;
 import com.wdeath.wshooter.zombie.game.levels.LevelData;
 import com.wdeath.wshooter.zombie.gui.VBox;
-import com.wdeath.wshooter.zombie.screens.ScreensData;
-import com.wdeath.wshooter.zombie.utill.GUIActions;
 
-public class MenuScreen implements Screen {
+import java.util.ArrayList;
+
+public class SelectLevel implements Screen {
 
     private Stage stage;
     private VBox box;
-    private TextButton selectLevel;
+    private ArrayList<TextButton> levels;
+    private TextButton back;
 
-    public MenuScreen(){
+    public SelectLevel() {
         stage = new Stage();
-        selectLevel = new TextButton("Выбрать уровень", Assets.skinUI);
         box = new VBox();
-
         box.width = 350;
         box.height = 30;
         box.indent = 10;
+        levels = new ArrayList<>();
 
-        selectLevel.addListener(new ClickListener(){
+        ArrayList<LevelData> list = LevelData.levels;
+        for(LevelData level : list){
+            TextButton levelButton = new TextButton(level.name, Assets.skinUI);
+            levelButton.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Runnable run =() -> {
+                        LevelData data = level;
+                        LoadingGameScreen loader = new LoadingGameScreen(data);
+                        MainGameClass.GAME.setScreen(loader);
+                    };
+                    box.close(run);
+                }
+            });
+            box.add(levelButton);
+            stage.addActor(levelButton);
+        }
+
+        back = new TextButton("Назад", Assets.skinUI);
+        back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Runnable run = () -> {
-                    MainGameClass.GAME.setScreen(ScreensData.selectLevel);
+                Runnable run =() -> {
+                    MainGameClass.GAME.setScreen(ScreensData.menu);
                 };
                 box.close(run);
             }
         });
-
-        stage.addActor(selectLevel);
-        box.add(selectLevel);
+        stage.addActor(back);
+        box.add(back);
     }
 
     @Override

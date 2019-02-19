@@ -19,7 +19,6 @@ import com.wdeath.wshooter.zombie.ecs.gui.coms.GuiComponent;
 import com.wdeath.wshooter.zombie.ecs.gui.systs.GuiRenderSystem;
 import com.wdeath.wshooter.zombie.ecs.gui.systs.GuiUpdateSystem;
 import com.wdeath.wshooter.zombie.ecs.level.LevelBuilder;
-import com.wdeath.wshooter.zombie.ecs.level.LevelData;
 import com.wdeath.wshooter.zombie.ecs.level.systs.LevelUpdateSystem;
 import com.wdeath.wshooter.zombie.ecs.player.systs.*;
 import com.wdeath.wshooter.zombie.ecs.stage.systs.StageRenderSystem;
@@ -28,6 +27,7 @@ import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieDamageSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieDeleteSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieMoveSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieSpawnSystem;
+import com.wdeath.wshooter.zombie.game.levels.LevelData;
 import com.wdeath.wshooter.zombie.utill.LoadingEngine;
 import com.wdeath.wshooter.zombie.ecs.world.WorldBuilder;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldSpawnComponent;
@@ -37,13 +37,12 @@ public class LoadingGameScreen implements Screen {
 
     private Stage stage;
     private LoadingEngine loadingEngine;
-    private GameData gameData;
     private LevelData levelData;
     private Engine engine;
     GameScreen gameScreen;
 
-    public LoadingGameScreen(GameData dataData) {
-        this.gameData = dataData;
+    public LoadingGameScreen(LevelData levelData) {
+        this.levelData = levelData;
     }
 
     @Override
@@ -57,15 +56,14 @@ public class LoadingGameScreen implements Screen {
         loadingEngine.add(() -> {
             engine = new Engine();
         }).add(() -> {
-            gameScreen = new GameScreen(engine, gameData);
-            levelData = new LevelData();
+            gameScreen = new GameScreen(engine, levelData);
             levelData.timeBegin = 2;
             levelData.sleep = 10;
         }).add(() -> {
             WorldBuilder builder = new WorldBuilder();
             Entity world = builder
                     .create()
-                    .createMap(gameData.fileLevel)
+                    .createMap(levelData.file)
                     .createPhysics()
                     .createDraw()
                     .createLight()
@@ -81,13 +79,13 @@ public class LoadingGameScreen implements Screen {
 
             Entity playerSpawnEntity = new Entity();
             PlayerSpawnComponent spawnPlayer = new PlayerSpawnComponent();
-            spawnPlayer.name = DataStatic.NAME_PLAYER;
+            spawnPlayer.name = PlayerGameData.NAME_PLAYER;
             spawnPlayer.maxHealth = 100;
             spawnPlayer.spawnPoint = new Vector2(world.getComponent(WorldSpawnComponent.class).spawns.get("player"));
             playerSpawnEntity.add(spawnPlayer);
             engine.addEntity(playerSpawnEntity);
 
-            InputControllerPlayer input = new InputControllerPlayer(DataStatic.NAME_PLAYER, gameScreen);
+            InputControllerPlayer input = new InputControllerPlayer(PlayerGameData.NAME_PLAYER, gameScreen);
             gameScreen.addInput(input);
 
             GuiBuilder guiBuilder = new GuiBuilder();
@@ -104,7 +102,7 @@ public class LoadingGameScreen implements Screen {
             WorldPhysicsDebugSystem debug = new WorldPhysicsDebugSystem(world);
             WorldDrawTiledMapSystem draw = new WorldDrawTiledMapSystem(world);
             PlayerSpawnSystem playerSpawn = new PlayerSpawnSystem(world);
-            WorldCameraSystem cameraSystem = new WorldCameraSystem(world, DataStatic.NAME_PLAYER);
+            WorldCameraSystem cameraSystem = new WorldCameraSystem(world, PlayerGameData.NAME_PLAYER);
             PlayerMoveSystem moveSystem = new PlayerMoveSystem(world);
             PlayerDamageSystem playerDamageSystem = new PlayerDamageSystem(gameEntity);
             WorldUpdateLightSystem lightSystem = new WorldUpdateLightSystem(world);

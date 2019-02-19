@@ -2,6 +2,7 @@ package com.wdeath.wshooter.zombie.ecs.level;
 
 import com.badlogic.ashley.core.Entity;
 import com.wdeath.wshooter.zombie.ecs.level.coms.LevelComponent;
+import com.wdeath.wshooter.zombie.game.levels.LevelData;
 
 public class LevelBuilder {
 

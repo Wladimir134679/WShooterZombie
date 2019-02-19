@@ -8,6 +8,7 @@ import com.wdeath.wshooter.zombie.game.DataStatic;
 import com.wdeath.wshooter.zombie.ecs.gui.coms.GuiElementComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerWeaponComponent;
+import com.wdeath.wshooter.zombie.game.PlayerGameData;
 
 public class GuiUpdateSystem extends EntitySystem {
 
@@ -27,7 +28,7 @@ public class GuiUpdateSystem extends EntitySystem {
             @Override
             public void entityAdded(Entity entity) {
                 PlayerComponent playerData = entity.getComponent(PlayerComponent.class);
-                if(playerData.name.equals(DataStatic.NAME_PLAYER)){
+                if(playerData.name.equals(PlayerGameData.NAME_PLAYER)){
                     player = entity;
                 }
             }

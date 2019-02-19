@@ -5,15 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.wdeath.wshooter.zombie.game.levels.LevelData;
 import com.wdeath.wshooter.zombie.utill.EngineThread;
 
 public class GameScreen implements Screen {
 
     public Engine engine;
-    public GameData data;
+    public LevelData data;
     private InputMultiplexer inputMultiplexer;
 
-    public GameScreen(Engine engine, GameData data) {
+    public GameScreen(Engine engine, LevelData data) {
         this.engine = engine;
         this.data = data;
         inputMultiplexer = new InputMultiplexer();

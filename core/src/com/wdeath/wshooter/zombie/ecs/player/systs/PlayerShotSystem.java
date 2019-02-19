@@ -13,6 +13,7 @@ import com.wdeath.wshooter.zombie.game.DataStatic;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerMoveComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerPhysicsComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerWeaponComponent;
+import com.wdeath.wshooter.zombie.game.PlayerGameData;
 import com.wdeath.wshooter.zombie.weapon.Weapon;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldLightComponent;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldPhysicsComponent;
@@ -59,7 +60,7 @@ public class PlayerShotSystem extends IteratingSystem {
                 posSpawn.y += 0.7f * (float)Math.sin(angle);
                 Entity bullet = bulletBuilder
                         .create()
-                        .createData(DamageType.PLAYER, DataStatic.NAME_PLAYER, weapon.data.damage)
+                        .createData(DamageType.PLAYER, PlayerGameData.NAME_PLAYER, weapon.data.damage)
                         .createPhysics(
                                 world.getComponent(WorldPhysicsComponent.class),
                                 posSpawn,

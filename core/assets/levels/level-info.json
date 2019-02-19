@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Level 1",
+    "file": "levels/level1.tmx"
+  },
+  {
+    "id": 2,
+    "name": "Level 2",
+    "file": "levels/level2.tmx"
+  }
+]
