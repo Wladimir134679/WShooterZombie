@@ -31,7 +31,7 @@ public class SelectLevel implements Screen {
 
         ArrayList<LevelData> list = LevelData.levels;
         for(LevelData level : list){
-            TextButton levelButton = new TextButton(level.name, Assets.skinUI);
+            TextButton levelButton = new TextButton(String.valueOf("Уровнь: " + level.id), Assets.skinUI);
             levelButton.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {

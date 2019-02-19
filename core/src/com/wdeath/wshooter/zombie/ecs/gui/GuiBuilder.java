@@ -32,7 +32,15 @@ public class GuiBuilder {
         createShotElement(element);
         createInfoLevel(element);
         createHealthPlayer(element);
+        createKill(element);
         gui.add(element);
+    }
+
+    private void createKill(GuiElementComponent element){
+        Label kill = new Label("", Assets.skinUI, "small");
+        kill.setPosition(10, 10 + 20 + 5 + 20 + 5 + 20 + 5);
+        component.stage.addActor(kill);
+        element.infoKill = kill;
     }
 
     private void createInfoLevel(GuiElementComponent element){

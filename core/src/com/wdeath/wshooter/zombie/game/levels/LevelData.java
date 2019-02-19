@@ -20,18 +20,19 @@ public class LevelData {
             JSONObject obj = arr.getJSONObject(i);
             LevelData level = new LevelData();
             level.id = obj.getInt("id");
-            level.name = obj.getString("name");
             level.file = obj.getString("file");
             level.timeBegin = obj.getFloat("timeBegin");
             level.timeWave = obj.getFloat("timeWave");
+            level.numberMoney = obj.getInt("numberMoney");
+            level.numberKill = obj.getInt("numberKill");
             levels.add(level);
         }
     }
 
     public int id;
-    public String name;
     public String file;
-
+    public int numberKill;
+    public int numberMoney;
 
     public float timeWave;
     public float timeBegin;

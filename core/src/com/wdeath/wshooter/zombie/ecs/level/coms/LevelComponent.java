@@ -9,4 +9,5 @@ public class LevelComponent implements Component {
     public float timeSpawn;
     public float timeBegin;
     public boolean isRun = false;
+    public int numKill = 0;
 }

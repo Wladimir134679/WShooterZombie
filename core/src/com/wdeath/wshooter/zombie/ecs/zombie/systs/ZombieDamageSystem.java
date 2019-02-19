@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.wdeath.wshooter.zombie.damage.Damage;
+import com.wdeath.wshooter.zombie.ecs.level.coms.LevelComponent;
 import com.wdeath.wshooter.zombie.ecs.zombie.coms.ZombieDeleteComponent;
 import com.wdeath.wshooter.zombie.ecs.zombie.coms.ZombieDamageComponent;
 import com.wdeath.wshooter.zombie.ecs.zombie.coms.ZombieHealthComponent;
@@ -27,15 +28,20 @@ public class ZombieDamageSystem extends IteratingSystem {
             Damage damage = damageComponent.list.get(0);
             damageComponent.list.remove(0);
 
-
             healthComponent.current -= damage.damage;
-        }
 
-        death(healthComponent, entity);
+            boolean death = death(damage, healthComponent, entity);
+            if(death)
+                break;
+        }
     }
     
-    private boolean death(ZombieHealthComponent healthComponent, Entity entity){
+    private boolean death(Damage damage, ZombieHealthComponent healthComponent, Entity entity){
         if(healthComponent.current <= 0){
+            Entity levelEntity = getEngine().getEntitiesFor(Family.one(LevelComponent.class).get()).get(0);
+            LevelComponent levelComponent = levelEntity.getComponent(LevelComponent.class);
+            levelComponent.numKill += 1;
+
             ZombieDeleteComponent delete = new ZombieDeleteComponent();
             entity.add(delete);
             return true;

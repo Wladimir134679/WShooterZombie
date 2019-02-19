@@ -10,4 +10,5 @@ public class GuiElementComponent implements Component {
 
     public Label infoLevel;
     public Label healthPlayer;
+    public Label infoKill;
 }

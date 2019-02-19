@@ -46,6 +46,7 @@ public class GuiUpdateSystem extends EntitySystem {
         updateShot(element);
         updateLevelInfo(element);
         updateHealthPlayer(element);
+        updateInfoKill(element);
     }
 
     private void updateHealthPlayer(GuiElementComponent element){
@@ -92,6 +93,12 @@ public class GuiUpdateSystem extends EntitySystem {
     private void updateFps(GuiElementComponent element){
         String str = String.valueOf("FPS: " + Gdx.graphics.getFramesPerSecond());
         element.infoFPS.setText(str);
+    }
+
+    private void updateInfoKill(GuiElementComponent element){
+        LevelComponent levelComponent = level.getComponent(LevelComponent.class);
+        String str = String.valueOf("Kill: " + levelComponent.numKill + "/" + levelComponent.data.numberKill);
+        element.infoKill.setText(str);
     }
 }
 
