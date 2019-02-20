@@ -15,6 +15,8 @@ public class WorldPhysicsSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
         WorldPhysicsComponent physicsComponent = entity.getComponent(WorldPhysicsComponent.class);
+        if(physicsComponent.deltaPhysics != -1)
+            deltaTime = physicsComponent.deltaPhysics;
         physicsComponent.world.step(deltaTime, 5,5);
     }
 }

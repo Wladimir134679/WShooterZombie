@@ -10,4 +10,6 @@ public class WorldPhysicsComponent implements Component {
     public World world;
     public Box2DDebugRenderer debug;
     public Body wall;
+
+    public float deltaPhysics = -1;
 }

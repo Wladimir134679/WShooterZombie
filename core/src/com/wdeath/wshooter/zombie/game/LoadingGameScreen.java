@@ -14,6 +14,8 @@ import com.wdeath.wshooter.zombie.ecs.bullet.systs.BulletLightSystem;
 import com.wdeath.wshooter.zombie.ecs.explosion.systs.ExplosionLightSystem;
 import com.wdeath.wshooter.zombie.ecs.explosion.systs.ExplosionSpawnSystem;
 import com.wdeath.wshooter.zombie.ecs.game.GameBuilder;
+import com.wdeath.wshooter.zombie.ecs.game.systs.GameInfoViewSystem;
+import com.wdeath.wshooter.zombie.ecs.game.systs.GameListenerSystem;
 import com.wdeath.wshooter.zombie.ecs.gui.GuiBuilder;
 import com.wdeath.wshooter.zombie.ecs.gui.coms.GuiComponent;
 import com.wdeath.wshooter.zombie.ecs.gui.systs.GuiRenderSystem;
@@ -118,6 +120,8 @@ public class LoadingGameScreen implements Screen {
             ZombieDamageSystem zombieDamageSystem = new ZombieDamageSystem(world);
             PlayerControllerSystem playerControllerSystem = new PlayerControllerSystem();
             ZombieMoveSystem zombieMoveSystem = new ZombieMoveSystem();
+            GameListenerSystem gameListenerSystem = new GameListenerSystem(gameEntity, world, level);
+            GameInfoViewSystem gameInfoViewSystem = new GameInfoViewSystem(guiEntity, gameEntity, world, level);
             engine.addSystem(playerControllerSystem);
             engine.addSystem(levelUpdateSystem);
             engine.addSystem(zombieSpawnSystem);
@@ -138,6 +142,8 @@ public class LoadingGameScreen implements Screen {
             engine.addSystem(bulletLightSystem);
             engine.addSystem(lightSystem);
             engine.addSystem(stageRenderSystem);
+            engine.addSystem(gameListenerSystem);
+            engine.addSystem(gameInfoViewSystem);
             engine.addSystem(guiUpdateSystem);
             engine.addSystem(guiRenderSystem);
         });
