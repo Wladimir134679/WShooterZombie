@@ -33,21 +33,10 @@ public class VBox{
     }
 
     public VBox close(Runnable run){
-        float startDel = 0.1f;
         for(int i = 0; i < actors.size(); i++){
             final int ip = i;
             final Actor act = actors.get(i);
-//            act.setPosition(getXEnd(i), getYEnd(i));
-            TemporalAction temp = new TemporalAction() {
-                @Override
-                protected void update(float percent) {
-                    if(percent != 1)
-                        return;
-                    closeActor(act, ip);
-                }
-            };
-            temp.setDuration(startDel + 0.25f * i);
-            act.addAction(temp);
+            closeActor(act, ip);
         }
 
         TemporalAction temp = new TemporalAction() {
@@ -59,53 +48,43 @@ public class VBox{
                     run.run();
             }
         };
-        temp.setDuration(startDel + 0.25f * (actors.size() + 1));
+        temp.setDuration(0.3f);
         actors.get(0).addAction(temp);
         return this;
     }
 
     private void closeActor(Actor actor, int i){
         MoveToAction move = new MoveToAction();
-        move.setDuration(0.25f);
+        move.setDuration(0.4f);
         move.setPosition(getXEnd(i), getYEnd(i));
-        move.setInterpolation(Interpolation.swingIn);
+        move.setInterpolation(Interpolation.pow4Out);
         actor.addAction(move);
     }
 
     public VBox open(){
-        float startDel = 0.25f;
         for(int i = 0; i < actors.size(); i++){
             final int ip = i;
             final Actor act = actors.get(i);
             act.setPosition(getXStart(i), getYStart(i));
-            TemporalAction temp = new TemporalAction() {
-                @Override
-                protected void update(float percent) {
-                    if(percent != 1)
-                        return;
-                    openActor(act, ip);
-                }
-            };
-            temp.setDuration(startDel + 0.25f * i);
-            act.addAction(temp);
+            openActor(act, ip);
         }
         return this;
     }
 
     private void openActor(Actor actor, int i){
         MoveToAction move = new MoveToAction();
-        move.setDuration(0.25f);
+        move.setDuration(0.4f);
         move.setPosition(getXPos(i), getYPos(i));
-        move.setInterpolation(Interpolation.swingOut);
+        move.setInterpolation(Interpolation.pow4In);
         actor.addAction(move);
     }
 
     private float getXStart(int i){
-        return (0 - width - 10);
+        return (xUp - width / 2);
     }
 
     private float getYStart(int i){
-        return (yUp - (indent + height) * (i + 1));
+        return (Gdx.graphics.getHeight() + height);
     }
 
     private float getXPos(int i){
@@ -117,11 +96,11 @@ public class VBox{
     }
 
     private float getXEnd(int i){
-        return (Gdx.graphics.getWidth() + 10);
+        return (xUp - width / 2);
     }
 
     private float getYEnd(int i){
-        return (yUp - (indent + height) * (i + 1));
+        return (0 - height);
     }
 
 
