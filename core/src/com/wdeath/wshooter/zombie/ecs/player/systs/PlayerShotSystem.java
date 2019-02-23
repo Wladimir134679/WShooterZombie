@@ -3,13 +3,11 @@ package com.wdeath.wshooter.zombie.ecs.player.systs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.wdeath.wshooter.zombie.damage.DamageType;
 import com.wdeath.wshooter.zombie.ecs.bullet.BulletBuilder;
 import com.wdeath.wshooter.zombie.ecs.explosion.ExplosionType;
 import com.wdeath.wshooter.zombie.ecs.explosion.coms.ExplosionSpawnComponent;
-import com.wdeath.wshooter.zombie.game.DataStatic;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerMoveComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerPhysicsComponent;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerWeaponComponent;
@@ -39,10 +37,10 @@ public class PlayerShotSystem extends IteratingSystem {
         weapon.timeShot += deltaTime;
         if(weapon.isRecharge){
             weapon.timeRecharge += deltaTime;
-            if(weapon.timeRecharge >= weapon.data.recharge) {
+            if(weapon.timeRecharge >= weapon.data.timeRecharge) {
                 weapon.isRecharge = false;
                 weapon.timeRecharge = 0;
-                weapon.shotNum = weapon.data.ammunitionMax;
+                weapon.shotNum = weapon.data.store;
             }
             return;
         }
@@ -51,7 +49,7 @@ public class PlayerShotSystem extends IteratingSystem {
                 weapon.isRecharge = true;
                 return;
             }
-            if(weapon.timeShot >= weapon.data.speed) {
+            if(weapon.timeShot >= weapon.data.timeShot) {
                 weapon.shotNum--;
                 weapon.timeShot = 0;
                 float angle = physics.body.getAngle();

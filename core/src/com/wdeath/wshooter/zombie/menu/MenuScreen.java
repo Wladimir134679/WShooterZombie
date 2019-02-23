@@ -21,7 +21,7 @@ import javax.xml.soap.Text;
 
 public class MenuScreen extends AnimationScreen {
 
-    private TextButton selectLevel;
+    private TextButton selectLevel, shop, setting, author, exit;
     private Table table;
 
     @Override
@@ -43,42 +43,46 @@ public class MenuScreen extends AnimationScreen {
                 timer(r, 0.2f);
             }
         });
-        selectLevel.setSize(300, 30);
+
+        shop = new TextButton("Оруженый магазин", Assets.skinUI);
+        setting = new TextButton("Настройки", Assets.skinUI);
+        author = new TextButton("Автор", Assets.skinUI);
+        exit = new TextButton("Выход", Assets.skinUI);
+        exit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                Runnable r = () -> {
+                    Gdx.app.exit();
+                };
+                timer(r, 0.3f);
+            }
+        });
+
         VBox buttons = new VBox(Assets.skinUI);
         buttons.addActor(selectLevel);
+        buttons.addActor(shop);
+        buttons.addActor(setting);
+        buttons.addActor(author);
+        buttons.addActor(exit);
 
         Cell cell = null;
         cell = table.add(buttons);
         cell.size(300, Gdx.graphics.getHeight() - 20);
 
         getStage().addActor(table);
-//        getStage().setDebugAll(true);
     }
 
     @Override
     public void open() {
         table.layout();
-        AlphaAction act= new AlphaAction();
         table.getColor().a = 0;
-        act.setAlpha(1f);
-        act.setDuration(0.1f);
-        table.addAction(act);
-//        Array<Cell> cells = table.getCells();
-//        for(Cell cell : cells){
-//            GUIActions.open(cell.getActor(), 3f);
-//        }
+        GUIActions.alpha(table, 1, 0.2f);
     }
 
     @Override
     public void close() {
         table.layout();
-        AlphaAction act= new AlphaAction();
-        act.setAlpha(0f);
-        act.setDuration(0.1f);
-        table.addAction(act);
-//        Array<Cell> cells = table.getCells();
-//        for(Cell cell : cells){
-//            GUIActions.close(cell.getActor(), 3f);
-//        }
+        GUIActions.alpha(table, 0, 0.2f);
     }
 }

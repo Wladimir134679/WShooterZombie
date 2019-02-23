@@ -7,6 +7,7 @@ import com.wdeath.wshooter.zombie.ecs.player.PlayerBuilder;
 import com.wdeath.wshooter.zombie.ecs.player.coms.PlayerSpawnComponent;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldLightComponent;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldPhysicsComponent;
+import com.wdeath.wshooter.zombie.game.PlayerGameData;
 
 public class PlayerSpawnSystem extends IteratingSystem {
 
@@ -30,7 +31,7 @@ public class PlayerSpawnSystem extends IteratingSystem {
                 .createPhysics(spawn, world.getComponent(WorldPhysicsComponent.class))
                 .createMove()
                 .createLight(lightComponent)
-                .createWeapon()
+                .createWeapon(PlayerGameData.weapon)
                 .createHealth(spawn)
                 .createDamage()
                 .get();

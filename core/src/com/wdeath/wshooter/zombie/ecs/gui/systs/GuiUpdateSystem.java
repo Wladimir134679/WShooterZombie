@@ -84,7 +84,7 @@ public class GuiUpdateSystem extends EntitySystem {
             if(weapon.weapon.timeRecharge > 0){
                 str += "Перезарядка...";
             }else{
-                str += String.valueOf(weapon.weapon.shotNum + "/" + weapon.weapon.data.ammunitionMax);
+                str += String.valueOf(weapon.weapon.shotNum + "/" + weapon.weapon.data.store);
             }
         }
         element.shot.setText(str);

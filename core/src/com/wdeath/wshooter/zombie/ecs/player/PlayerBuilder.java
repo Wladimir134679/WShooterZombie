@@ -108,11 +108,11 @@ public class PlayerBuilder {
         return this;
     }
 
-    public PlayerBuilder createWeapon(){
+    public PlayerBuilder createWeapon(WeaponData weaponData){
         PlayerWeaponComponent weaponComponent = new PlayerWeaponComponent();
         Weapon weapon = new Weapon();
-        weapon.data = WeaponData.weapons.get("Gun");
-        weapon.shotNum = weapon.data.ammunitionMax;
+        weapon.data = weaponData;
+        weapon.shotNum = weapon.data.store;
         weapon.timeShot = 0;
         weaponComponent.weapon = weapon;
         entity.add(weaponComponent);

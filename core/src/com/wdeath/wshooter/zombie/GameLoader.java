@@ -26,7 +26,7 @@ public class GameLoader implements Screen {
         loading = new LoadingEngine();
         loading.add(() -> Assets.load());
         loading.add(() -> LevelData.init());
-        loading.add(() -> WeaponData.init());
+        loading.add(() -> WeaponData.load());
         loading.add(() -> ScreensData.init());
         loading.setEnd(() -> {
             MainGameClass.GAME.setScreen(ScreensData.menu);

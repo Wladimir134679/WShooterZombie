@@ -78,19 +78,19 @@ public class PlayerMoveSystem extends IteratingSystem {
 //        ph.body.setTransform(ph.body.getPosition(), (float)Math.toRadians(angle));
 
 //        if(move.key[PlayerMoveComponent.CTRL])
-//            speed += 8;
+//            timeShot += 8;
 //        if(move.key[PlayerMoveComponent.SHIFT]){
 //            if (move.key[PlayerMoveComponent.UP]) {
-//                physics.body.setLinearVelocity(physics.body.getLinearVelocity().x, speed);
+//                physics.body.setLinearVelocity(physics.body.getLinearVelocity().x, timeShot);
 //            }
 //            if (move.key[PlayerMoveComponent.DOWN]) {
-//                physics.body.setLinearVelocity(physics.body.getLinearVelocity().x, -speed);
+//                physics.body.setLinearVelocity(physics.body.getLinearVelocity().x, -timeShot);
 //            }
 //            if (move.key[PlayerMoveComponent.LEFT]) {
-//                physics.body.setLinearVelocity(-speed, physics.body.getLinearVelocity().y);
+//                physics.body.setLinearVelocity(-timeShot, physics.body.getLinearVelocity().y);
 //            }
 //            if (move.key[PlayerMoveComponent.RIGHT]) {
-//                physics.body.setLinearVelocity(speed, physics.body.getLinearVelocity().y);
+//                physics.body.setLinearVelocity(timeShot, physics.body.getLinearVelocity().y);
 //            }
 //            if(!move.key[PlayerMoveComponent.UP] &&
 //                    !move.key[PlayerMoveComponent.DOWN] &&
@@ -100,9 +100,9 @@ public class PlayerMoveSystem extends IteratingSystem {
 //            }
 //        }else {
 //            if (move.key[PlayerMoveComponent.UP]) {
-//                physics.body.setLinearVelocity(speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
+//                physics.body.setLinearVelocity(timeShot * (float) Math.cos(angle), timeShot * (float) Math.sin(angle));
 //            } else if (move.key[PlayerMoveComponent.DOWN]) {
-//                physics.body.setLinearVelocity(-speed * (float) Math.cos(angle), -speed * (float) Math.sin(angle));
+//                physics.body.setLinearVelocity(-timeShot * (float) Math.cos(angle), -timeShot * (float) Math.sin(angle));
 //            } else {
 //                physics.body.setLinearVelocity(0, 0);
 //            }

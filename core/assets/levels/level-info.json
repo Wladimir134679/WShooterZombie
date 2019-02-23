@@ -14,5 +14,13 @@
     "timeWave" : 15,
     "numberKill": 15,
     "numberMoney": 15
+  },
+  {
+    "id": 3,
+    "file": "levels/level3.tmx",
+    "timeBegin": 3,
+    "timeWave" : 10,
+    "numberKill": 30,
+    "numberMoney": 20
   }
 ]
