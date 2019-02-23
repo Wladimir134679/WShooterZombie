@@ -1,7 +1,9 @@
 package com.wdeath.wshooter.zombie.utill;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
@@ -44,17 +46,25 @@ public class GUIActions {
     public static void close(Actor actor, float delay){
         MoveToAction act = new MoveToAction();
         actor.addAction(act);
-        act.setPosition(actor.getStage().getWidth() + actor.getWidth() - 20, actor.getY());
-        act.setInterpolation(Interpolation.swingIn);
-        act.setDuration(0.25f);
+        act.setPosition(actor.getX(), 0 - actor.getHeight());
+//        actor.setPosition(actor.getX(), Gdx.graphics.getHeight() + actor.getHeight());
+        act.setInterpolation(Interpolation.pow2In);
+        act.setDuration(delay);
     }
 
     public static void open(Actor actor, float delay){
         MoveToAction act = new MoveToAction();
         actor.addAction(act);
         act.setPosition(actor.getX(), actor.getY());
-        actor.setPosition(0 - actor.getWidth() - 20, actor.getY());
-        act.setInterpolation(Interpolation.swingOut);
-        act.setDuration(0.25f);
+        actor.setPosition(actor.getX(), Gdx.graphics.getHeight() + actor.getHeight());
+        act.setInterpolation(Interpolation.pow2Out);
+        act.setDuration(delay);
+    }
+
+    public static void alpha(Actor actor, float a, float duration){
+        AlphaAction act = new AlphaAction();
+        act.setAlpha(a);
+        act.setDuration(duration);
+        actor.addAction(act);
     }
 }

@@ -1,45 +1,37 @@
 package com.wdeath.wshooter.zombie.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-
-public class VBox extends WidgetGroup {
+public class HBox extends WidgetGroup {
 
     private Drawable background;
 
-    public VBox(Skin skin){
+    public HBox(Skin skin){
         this(skin, "border-dark-blue");
     }
 
-    public VBox(Skin skin, String name){
+    public HBox(Skin skin, String name){
         background = skin.getDrawable(name);
     }
 
     @Override
     public void layout() {
         Array<Actor> list = this.getChildren();
-        float w = getWidth() - 10;
+        float h = getHeight() - 10;
+        int size = list.size;
+        float p = 5;
+        float w = (getWidth() - (p * size) - p) / size;
         for(int i = 0; i < list.size; i++){
             Actor actor = list.get(i);
-            if(actor instanceof Label){
-                ((Label)actor).pack();
-            }
             actor.setWidth(w);
-            actor.setX(getWidth() / 2 - w / 2);
-            actor.setY(getHeight() - 5 - (actor.getHeight() + 5) * (i + 1));
+            actor.setHeight(h);
+            actor.setX(p + (w + 5) * i);
+            actor.setY(5);
         }
     }
 
