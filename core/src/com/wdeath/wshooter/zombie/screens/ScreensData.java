@@ -6,9 +6,11 @@ public class ScreensData {
 
     public static MenuScreen menu;
     public static SelectLevel selectLevel;
+    public static ProfilePlayer profilePlayer;
 
     public static void init(){
         menu = new MenuScreen();
         selectLevel = new SelectLevel();
+        profilePlayer = new ProfilePlayer();
     }
 }

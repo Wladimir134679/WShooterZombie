@@ -8,6 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //		config.fullscreen = true;
+		config.width = 800;
+		config.height = 600;
 		config.title = "WShooter Zombie";
 		new LwjglApplication(new MainGameClass(), config);
 	}

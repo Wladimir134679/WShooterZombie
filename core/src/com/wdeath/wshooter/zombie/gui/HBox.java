@@ -37,7 +37,9 @@ public class HBox extends WidgetGroup {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        background.draw(batch,getX(), getY(), getWidth(), getHeight());
+        batch.setColor(1, 1, 1, parentAlpha);
+        background.draw(batch, getX(), getY(), getWidth(), getHeight());
+        batch.flush();
         super.draw(batch, parentAlpha);
     }
 }

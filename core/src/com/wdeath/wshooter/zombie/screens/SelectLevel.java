@@ -31,9 +31,9 @@ public class SelectLevel extends AnimationScreen {
     @Override
     public void init() {
         table = new Table();
-        table.setSize(Gdx.graphics.getWidth() - 20, Gdx.graphics.getHeight() - 20);
-        table.setPosition(10, 10);
-        table.left();
+        table.setSize(Gdx.graphics.getWidth() - 10, Gdx.graphics.getHeight() - 10);
+        table.setPosition(5, 5);
+        table.top();
 
         VBox paneInfo = new VBox(Assets.skinUI);
         Label title = new Label("Выберите уровень", Assets.skinUI);
@@ -125,11 +125,11 @@ public class SelectLevel extends AnimationScreen {
         panesAll.addActor(paneInfo);
 
         cell = table.add(panesAll);
-        cell.size(wPane, Gdx.graphics.getHeight() - 20 - 50);
-        cell.padBottom(5);
+        cell.size(wPane, table.getHeight() - 40);
+//        cell.padBottom(5);
         table.row();
         cell = table.add(buttons);
-        cell.size(table.getWidth(), 40);
+        cell.size(wPane, 40);
 
         getStage().addActor(table);
 //        getStage().setDebugAll(true);

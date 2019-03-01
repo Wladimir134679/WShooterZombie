@@ -32,20 +32,24 @@ public class VBox extends WidgetGroup {
     public void layout() {
         Array<Actor> list = this.getChildren();
         float w = getWidth() - 10;
+        float h = (getHeight() - (list.size * 5) - 5) / (list.size);
         for(int i = 0; i < list.size; i++){
             Actor actor = list.get(i);
+            actor.setHeight(h);
             if(actor instanceof Label){
                 ((Label)actor).pack();
             }
             actor.setWidth(w);
             actor.setX(getWidth() / 2 - w / 2);
-            actor.setY(getHeight() - 5 - (actor.getHeight() + 5) * (i + 1));
+            actor.setY(getHeight() - (actor.getHeight() + 5) * (i + 1));
         }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(1, 1, 1, parentAlpha);
         background.draw(batch,getX(), getY(), getWidth(), getHeight());
+        batch.flush();
         super.draw(batch, parentAlpha);
     }
 }
