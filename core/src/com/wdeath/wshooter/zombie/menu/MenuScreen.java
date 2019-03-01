@@ -56,6 +56,16 @@ public class MenuScreen extends AnimationScreen {
             }
         });
         shop = new TextButton("Оруженый магазин", Assets.skinUI);
+        shop.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                Runnable r = () -> {
+                    MainGameClass.GAME.setScreen(ScreensData.weaponsShop);
+                };
+                timer(r, 0.2f);
+            }
+        });
         setting = new TextButton("Настройки", Assets.skinUI);
         author = new TextButton("Автор", Assets.skinUI);
         exit = new TextButton("Выход", Assets.skinUI);

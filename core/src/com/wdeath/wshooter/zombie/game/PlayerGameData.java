@@ -20,4 +20,11 @@ public class PlayerGameData {
         listBuyWeapon = new ArrayList<>();
         listBuyWeapon.add(1);
     }
+
+    public static boolean isBuyWeapon(int id){
+        for(Integer it : listBuyWeapon)
+            if(it == id)
+                return true;
+        return false;
+    }
 }

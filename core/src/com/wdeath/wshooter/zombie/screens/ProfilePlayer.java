@@ -14,6 +14,7 @@ import com.wdeath.wshooter.zombie.gui.AnimationScreen;
 import com.wdeath.wshooter.zombie.gui.HBox;
 import com.wdeath.wshooter.zombie.gui.VBox;
 import com.wdeath.wshooter.zombie.utill.GUIActions;
+import com.wdeath.wshooter.zombie.weapon.Weapon;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class ProfilePlayer extends AnimationScreen {
 
     private Window winWeapon;
 
-    private HashMap<String, WeaponData> weaponsData;
+    private HashMap<String, Integer> weaponsData;
 
     @Override
     public void init() {
@@ -81,19 +82,14 @@ public class ProfilePlayer extends AnimationScreen {
         boxs.put(buttonsListMain[2], statList);
 
         listNavig.setItems(buttonsListMain);
-        HashMap<Integer, WeaponData> map = WeaponData.weapons;
         weaponsData = new HashMap<>();
-        for(Map.Entry<Integer, WeaponData> data : map.entrySet()){
-            listWeapons.getItems().add(data.getValue().name);
-            weaponsData.put(data.getValue().name, data.getValue());
-        }
         listWeapons.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String select = listWeapons.getSelected();
                 if(select == null)
                     return;
-                WeaponData data = weaponsData.get(select);
+                WeaponData data = WeaponData.weapons.get(weaponsData.get(select));
                 openWin(data);
             }
         });
@@ -151,10 +147,10 @@ public class ProfilePlayer extends AnimationScreen {
         HashMap<Integer, WeaponData> map = WeaponData.weapons;
         weaponsData = new HashMap<>();
         listWeapons.clearItems();
-        for(Map.Entry<Integer, WeaponData> data : map.entrySet()){
-            System.out.println(data.getValue().name);
-            listWeapons.getItems().add(data.getValue().name);
-            weaponsData.put(data.getValue().name, data.getValue());
+        for(Integer it : PlayerGameData.listBuyWeapon){
+            WeaponData data = WeaponData.weapons.get(it);
+            listWeapons.getItems().add(data.name);
+            weaponsData.put(data.name, data.id);
         }
 
         lName.setText(PlayerGameData.NAME_PLAYER);

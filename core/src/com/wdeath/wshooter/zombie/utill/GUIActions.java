@@ -9,6 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 public class GUIActions {
 
+    public static void timer(Actor timerActor, Runnable run, float time){
+        TemporalAction temporal = new TemporalAction() {
+            @Override
+            protected void update(float percent) {
+                if(percent != 1)
+                    return;
+                run.run();
+                timerActor.removeAction(this);
+            }
+        };
+        temporal.setDuration(time);
+        timerActor.addAction(temporal);
+    }
 
     public static void closeDelay(Runnable run, Actor ... actors){
         float delay = 0.1f;
