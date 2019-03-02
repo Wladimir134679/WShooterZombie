@@ -8,6 +8,7 @@ import com.wdeath.wshooter.zombie.Assets;
 import com.wdeath.wshooter.zombie.MainGameClass;
 import com.wdeath.wshooter.zombie.game.PlayerGameData;
 import com.wdeath.wshooter.zombie.gui.AnimationScreen;
+import com.wdeath.wshooter.zombie.gui.DialogWindow;
 import com.wdeath.wshooter.zombie.gui.HBox;
 import com.wdeath.wshooter.zombie.gui.VBox;
 import com.wdeath.wshooter.zombie.utill.GUIActions;
@@ -23,6 +24,7 @@ public class WeaponShopScreen extends AnimationScreen {
 
     public HBox infoBox;
     public VBox mainBox;
+    private List<String> listWeapons;
     public HBox buttonsBox;
 
     private Label infoMoney;
@@ -49,18 +51,8 @@ public class WeaponShopScreen extends AnimationScreen {
         infoMoney = new Label("", Assets.skinUI);
         infoBox.addActor(infoMoney);
 
-        List<String> listWeapons = new List<String>(Assets.skinUI);
+        listWeapons = new List<String>(Assets.skinUI);
         ScrollPane scrollPane = new ScrollPane(listWeapons, Assets.skinUI);
-        HashMap<Integer, WeaponData> weaponsData = WeaponData.weapons;
-        weaponsDataID = new HashMap<>();
-        for(Map.Entry<Integer, WeaponData> weapon : weaponsData.entrySet()){
-            String str = weapon.getValue().name;
-            if(PlayerGameData.isBuyWeapon(weapon.getValue().id)){
-                str += " (куплено)";
-            }
-            weaponsDataID.put(str, weapon.getValue().id);
-            listWeapons.getItems().add(str);
-        }
         mainBox.addActor(scrollPane);
 
         TextButton showWeapon = new TextButton("Показать", Assets.skinUI);
@@ -73,6 +65,7 @@ public class WeaponShopScreen extends AnimationScreen {
                 WeaponData data = WeaponData.weapons.get(weaponsDataID.get(select));
                 if(data == null)
                     return;
+                windowWeapon.setClose(() -> {update();});
                 windowWeapon.open(data);
             }
         });
@@ -108,10 +101,24 @@ public class WeaponShopScreen extends AnimationScreen {
         this.getStage().addActor(windowWeapon);
     }
 
+    private void update(){
+        infoMoney.setText("Монеты: " + PlayerGameData.money);
+        HashMap<Integer, WeaponData> weaponsData = WeaponData.weapons;
+        weaponsDataID = new HashMap<>();
+        listWeapons.clearItems();
+        for(Map.Entry<Integer, WeaponData> weapon : weaponsData.entrySet()){
+            String str = weapon.getValue().name;
+            if(PlayerGameData.isBuyWeapon(weapon.getValue().id)){
+                str += " (куплено)";
+            }
+            weaponsDataID.put(str, weapon.getValue().id);
+            listWeapons.getItems().add(str);
+        }
+    }
 
     @Override
     public void open() {
-        infoMoney.setText("Монеты: " + PlayerGameData.money);
+        update();
         table.layout();
         table.getColor().a = 0;
         GUIActions.alpha(table, 1, 0.1f);
@@ -129,6 +136,7 @@ public class WeaponShopScreen extends AnimationScreen {
 
         public WeaponData data;
         private Label wName, wDamage, wStore, wRecharge, wShot, price;
+        private Runnable rClose = null;
 
         public WindowWeapon(Skin skin) {
             super("", skin);
@@ -154,6 +162,24 @@ public class WeaponShopScreen extends AnimationScreen {
 
             HBox buttons = new HBox(Assets.skinUI);
             TextButton ok = new TextButton("Купить", Assets.skinUI);
+            ok.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    String infa = "Купить " + data.name + " за " + data.price + " монет?";
+                    DialogWindow dialogWindow = new DialogWindow(Assets.skinUI);
+                    Runnable rOk = () -> {
+                        if(PlayerGameData.isNewBuyWeapon(data)){
+                            PlayerGameData.money -= data.price;
+                            PlayerGameData.listBuyWeapon.add(data.id);
+                            WindowWeapon.this.close();
+                        }else{
+                            WindowWeapon.this.close();
+                        }
+                    };
+                    Runnable rBack = () -> {};
+                    dialogWindow.openConfirmation(getStage(), infa, rOk, rBack);
+                }
+            });
             TextButton close = new TextButton("Закрыть", Assets.skinUI);
             close.addListener(new ClickListener(){
                 @Override
@@ -203,6 +229,13 @@ public class WeaponShopScreen extends AnimationScreen {
 
         private void closeWin(){
             this.setVisible(false);
+            if(rClose != null)
+                rClose.run();
+        }
+
+        private WindowWeapon setClose(Runnable r){
+            rClose = r;
+            return this;
         }
     }
 }

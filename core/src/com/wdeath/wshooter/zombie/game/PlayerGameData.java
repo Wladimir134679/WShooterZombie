@@ -27,4 +27,14 @@ public class PlayerGameData {
                 return true;
         return false;
     }
+
+    public static boolean isNewBuyWeapon(int id){
+        return isNewBuyWeapon(WeaponData.weapons.get(id));
+    }
+
+    public static boolean isNewBuyWeapon(WeaponData data){
+        if(money >= data.price)
+            return true;
+        return false;
+    }
 }

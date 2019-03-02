@@ -142,21 +142,27 @@ public class ProfilePlayer extends AnimationScreen {
         getStage().addActor(winWeapon);
     }
 
-    @Override
-    public void open() {
-        HashMap<Integer, WeaponData> map = WeaponData.weapons;
+    private void update(){
         weaponsData = new HashMap<>();
         listWeapons.clearItems();
         for(Integer it : PlayerGameData.listBuyWeapon){
             WeaponData data = WeaponData.weapons.get(it);
-            listWeapons.getItems().add(data.name);
-            weaponsData.put(data.name, data.id);
+            String str = data.name;
+            if(PlayerGameData.weapon.id == it)
+                str += " (снаряжено)";
+            weaponsData.put(str, data.id);
+            listWeapons.getItems().add(str);
         }
 
         lName.setText(PlayerGameData.NAME_PLAYER);
         lMoney.setText("Money: " + PlayerGameData.money);
         lKills.setText("Убито...");
 
+    }
+
+    @Override
+    public void open() {
+        update();
         table.layout();
         table.getColor().a = 0;
         GUIActions.alpha(table, 1, 0.1f);
@@ -169,6 +175,7 @@ public class ProfilePlayer extends AnimationScreen {
     }
 
     private Label wName, wDamage, wStore, wRecharge, wShot;
+    private WeaponData dataShow = null;
 
     private void createWinWeapon(){
         winWeapon = new Dialog("Оружие", Assets.skinUI);
@@ -190,6 +197,19 @@ public class ProfilePlayer extends AnimationScreen {
 
         HBox buttons = new HBox(Assets.skinUI);
 
+        TextButton fit = new TextButton("Снарядить", Assets.skinUI);
+        fit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GUIActions.alpha(winWeapon, 0, 0.1f);
+                timer(() -> {
+                    winWeapon.setVisible(false);
+                    PlayerGameData.weapon = dataShow;
+                    update();
+                }, 0.15f);
+            }
+        });
+
         TextButton close = new TextButton("Закрыть", Assets.skinUI);
         close.addListener(new ClickListener(){
             @Override
@@ -200,6 +220,7 @@ public class ProfilePlayer extends AnimationScreen {
                 }, 0.15f);
             }
         });
+        buttons.addActor(fit);
         buttons.addActor(close);
         Cell cell = winWeapon.add(box);
         cell.size(400, 9 * 30);
@@ -210,6 +231,7 @@ public class ProfilePlayer extends AnimationScreen {
         winWeapon.setVisible(false);
     }
     private void openWin(WeaponData data){
+        this.dataShow = data;
         winWeapon.layout();
         winWeapon.setVisible(true);
 
