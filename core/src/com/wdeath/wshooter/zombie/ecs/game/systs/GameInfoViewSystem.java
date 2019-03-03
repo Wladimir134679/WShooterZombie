@@ -20,6 +20,7 @@ import com.wdeath.wshooter.zombie.ecs.player.systs.PlayerShotSystem;
 import com.wdeath.wshooter.zombie.ecs.world.systems.WorldPhysicsSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieMoveSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieSpawnSystem;
+import com.wdeath.wshooter.zombie.game.PlayerGameData;
 import com.wdeath.wshooter.zombie.screens.ScreensData;
 
 public class GameInfoViewSystem extends EntitySystem {
@@ -99,6 +100,7 @@ public class GameInfoViewSystem extends EntitySystem {
             LevelComponent levelComponent = level.getComponent(LevelComponent.class);
             title.setText("Победа!");
             String str = String.valueOf("Монет: " + levelComponent.data.numberMoney);
+            PlayerGameData.money += levelComponent.data.numberMoney;
             info.setText(str);
             createView();
             view = true;
