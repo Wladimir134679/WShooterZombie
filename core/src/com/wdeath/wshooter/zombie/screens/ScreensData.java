@@ -8,11 +8,13 @@ public class ScreensData {
     public static SelectLevel selectLevel;
     public static ProfilePlayer profilePlayer;
     public static WeaponShopScreen weaponsShop;
+    public static SetTypePlayer setTypePlayer;
 
     public static void init(){
         menu = new MenuScreen();
         selectLevel = new SelectLevel();
         profilePlayer = new ProfilePlayer();
         weaponsShop = new WeaponShopScreen();
+        setTypePlayer = new SetTypePlayer();
     }
 }

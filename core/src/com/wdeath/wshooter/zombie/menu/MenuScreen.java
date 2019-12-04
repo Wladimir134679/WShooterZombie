@@ -21,7 +21,7 @@ import javax.xml.soap.Text;
 
 public class MenuScreen extends AnimationScreen {
 
-    private TextButton selectLevel, profile, shop, setting, author, exit;
+    private TextButton selectLevel, profile, shop, setTypePlayer, setting, author, exit;
     private Table table;
 
     @Override
@@ -66,6 +66,17 @@ public class MenuScreen extends AnimationScreen {
                 timer(r, 0.2f);
             }
         });
+        setTypePlayer = new TextButton("Тип персонажа", Assets.skinUI);
+        setTypePlayer.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+                Runnable r = () -> {
+                    MainGameClass.GAME.setScreen(ScreensData.setTypePlayer);
+                };
+                timer(r, 0.2f);
+            }
+        });
         setting = new TextButton("Настройки", Assets.skinUI);
         author = new TextButton("Автор", Assets.skinUI);
         exit = new TextButton("Выход", Assets.skinUI);
@@ -84,6 +95,7 @@ public class MenuScreen extends AnimationScreen {
         buttons.addActor(selectLevel);
         buttons.addActor(profile);
         buttons.addActor(shop);
+        buttons.addActor(setTypePlayer);
         buttons.addActor(setting);
         buttons.addActor(author);
         buttons.addActor(exit);

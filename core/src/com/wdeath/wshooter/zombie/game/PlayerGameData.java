@@ -1,5 +1,6 @@
 package com.wdeath.wshooter.zombie.game;
 
+import com.wdeath.wshooter.zombie.player.PlayerData;
 import com.wdeath.wshooter.zombie.weapon.Weapon;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
 
@@ -8,14 +9,12 @@ import java.util.ArrayList;
 public class PlayerGameData {
 
     public static String NAME_PLAYER = "Player";
-    public static int money = 999999;
 
     public static WeaponData weapon;
     public static ArrayList<Integer> listBuyWeapon;
 
     public static void load(){
         NAME_PLAYER = "Player";
-        money = 999;
         weapon = WeaponData.weapons.get(1);
         listBuyWeapon = new ArrayList<>();
         listBuyWeapon.add(1);
@@ -33,7 +32,7 @@ public class PlayerGameData {
     }
 
     public static boolean isNewBuyWeapon(WeaponData data){
-        if(money >= data.price)
+        if(PlayerData.money >= data.price)
             return true;
         return false;
     }

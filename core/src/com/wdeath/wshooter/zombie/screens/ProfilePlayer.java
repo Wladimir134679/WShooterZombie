@@ -13,6 +13,7 @@ import com.wdeath.wshooter.zombie.game.PlayerGameData;
 import com.wdeath.wshooter.zombie.gui.AnimationScreen;
 import com.wdeath.wshooter.zombie.gui.HBox;
 import com.wdeath.wshooter.zombie.gui.VBox;
+import com.wdeath.wshooter.zombie.player.PlayerData;
 import com.wdeath.wshooter.zombie.utill.GUIActions;
 import com.wdeath.wshooter.zombie.weapon.Weapon;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
@@ -29,7 +30,7 @@ public class ProfilePlayer extends AnimationScreen {
     private VBox infoList, statList;
 
     private List<String> listWeapons;
-    private Label lName, lMoney;
+    private Label lMoney, lTypePlayer;
     private Label lKills;
 
     private Window winWeapon;
@@ -55,10 +56,10 @@ public class ProfilePlayer extends AnimationScreen {
 
         listWeapons = new List<>(Assets.skinUI);
 
-        lName = new Label("", Assets.skinUI);
         lMoney = new Label("", Assets.skinUI);
-        infoList.addActor(lName);
+        lTypePlayer = new Label("", Assets.skinUI);
         infoList.addActor(lMoney);
+        infoList.addActor(lTypePlayer);
 
         lKills = new Label("", Assets.skinUI);
         statList.addActor(lKills);
@@ -154,9 +155,9 @@ public class ProfilePlayer extends AnimationScreen {
             listWeapons.getItems().add(str);
         }
 
-        lName.setText(PlayerGameData.NAME_PLAYER);
-        lMoney.setText("Money: " + PlayerGameData.money);
-        lKills.setText("Убито...");
+        lMoney.setText("Монеты: " + PlayerData.money);
+        lKills.setText("Убито: " + PlayerData.killMonster);
+        lTypePlayer.setText("Тип персонажа: " + PlayerData.typePlayer.name);
 
     }
 

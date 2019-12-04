@@ -11,6 +11,7 @@ import com.wdeath.wshooter.zombie.gui.AnimationScreen;
 import com.wdeath.wshooter.zombie.gui.DialogWindow;
 import com.wdeath.wshooter.zombie.gui.HBox;
 import com.wdeath.wshooter.zombie.gui.VBox;
+import com.wdeath.wshooter.zombie.player.PlayerData;
 import com.wdeath.wshooter.zombie.utill.GUIActions;
 import com.wdeath.wshooter.zombie.weapon.Weapon;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
@@ -102,7 +103,7 @@ public class WeaponShopScreen extends AnimationScreen {
     }
 
     private void update(){
-        infoMoney.setText("Монеты: " + PlayerGameData.money);
+        infoMoney.setText("Монеты: " + PlayerData.money);
         HashMap<Integer, WeaponData> weaponsData = WeaponData.weapons;
         weaponsDataID = new HashMap<>();
         listWeapons.clearItems();
@@ -169,7 +170,7 @@ public class WeaponShopScreen extends AnimationScreen {
                     DialogWindow dialogWindow = new DialogWindow(Assets.skinUI);
                     Runnable rOk = () -> {
                         if(PlayerGameData.isNewBuyWeapon(data)){
-                            PlayerGameData.money -= data.price;
+                            PlayerData.money -= data.price;
                             PlayerGameData.listBuyWeapon.add(data.id);
                             WindowWeapon.this.close();
                         }else{

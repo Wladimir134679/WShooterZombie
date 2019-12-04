@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.wdeath.wshooter.zombie.game.PlayerGameData;
 import com.wdeath.wshooter.zombie.game.levels.LevelData;
 import com.wdeath.wshooter.zombie.menu.MenuScreen;
+import com.wdeath.wshooter.zombie.player.PlayerData;
+import com.wdeath.wshooter.zombie.player.TypePlayer;
 import com.wdeath.wshooter.zombie.screens.ScreensData;
 import com.wdeath.wshooter.zombie.utill.LoadingEngine;
 import com.wdeath.wshooter.zombie.weapon.WeaponData;
@@ -29,7 +31,9 @@ public class GameLoader implements Screen {
         loading.add(() -> LevelData.init());
         loading.add(() -> WeaponData.load());
         loading.add(() -> PlayerGameData.load());
+        loading.add(() -> TypePlayer.load());
         loading.add(() -> ScreensData.init());
+        loading.add(() -> PlayerData.init());
         loading.setEnd(() -> {
             MainGameClass.GAME.setScreen(ScreensData.menu);
         });

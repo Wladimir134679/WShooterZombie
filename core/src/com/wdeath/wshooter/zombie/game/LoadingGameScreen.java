@@ -30,6 +30,7 @@ import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieDeleteSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieMoveSystem;
 import com.wdeath.wshooter.zombie.ecs.zombie.systs.ZombieSpawnSystem;
 import com.wdeath.wshooter.zombie.game.levels.LevelData;
+import com.wdeath.wshooter.zombie.player.TypePlayer;
 import com.wdeath.wshooter.zombie.utill.LoadingEngine;
 import com.wdeath.wshooter.zombie.ecs.world.WorldBuilder;
 import com.wdeath.wshooter.zombie.ecs.world.component.WorldSpawnComponent;
